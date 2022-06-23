@@ -1,18 +1,28 @@
 import React, {useState} from 'react';
 import './App.css';
 
+type PropsType = {
+    plusOne: () => void,
+    reset: () => void,
+    counter: number,
+    error: string
+    minn: number,
+    maxx: number,
 
-export function Counter(){
-    const [counter, setCounter] = useState(0)
-    const [error, setError] = useState('')
-    const plusOne = () => counter === 10 ? (setCounter(10), setError('Max value of counter!')) : (setCounter(counter + 1), setError(''))
-    const minusOne = () => counter === 0 ? (setCounter(0), setError('Min value of counter!')) : (setCounter(counter - 1), setError(''))
-    return <div>
-        <div className="counter">{counter}</div>
-        <button onClick={plusOne}>+</button>
-        <button onClick={minusOne}>-</button>
-        <p className="err">{error}</p>
-    </div>
 }
 
+export function Counter(props: PropsType) {
+    const styles = {color: ''}
+    if (props.counter === props.maxx) {
+        styles.color = 'red'
+    }
+    return <div className="main">
+        <div className="d2">
+            <div className="counter"><p style={styles}>{props.counter}</p></div>
+            <button onClick={props.reset} disabled={props.counter === props.minn ? true : false}>reset</button>
+            <button onClick={props.plusOne} disabled={props.counter === props.maxx ? true : false}>inc</button>
+            <p className="err">{props.error}</p>
+        </div>
 
+    </div>
+}
